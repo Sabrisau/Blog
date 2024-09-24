@@ -3,6 +3,7 @@ class RequestLogMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        print(f'Solicitud recibida: {request.method} {request.path}')
+        print(f'Request URL: {request.path} - User: {request.user} - Method: {request.method}')
         response = self.get_response(request)
+        print(f'Response: {response}')
         return response

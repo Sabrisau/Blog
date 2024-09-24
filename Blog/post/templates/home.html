@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <h2>Publicaciones</h2>
+  <ul>
+    {% for publicacion in publicaciones %}
+      <li>
+        <h3>{{ publicacion.titulo }}</h3>
+        <p>{{ publicacion.contenido }}</p>
+        <p>Publicado por {{ publicacion.autor }} el {{ publicacion.fecha|date:"d M Y H:i" }}</p>
+        <a href="{% url 'detalle_publicacion' publicacion.pk %}">Ver Detalle</a>
+      </li>
+    {% empty %}
+      <li>No hay publicaciones disponibles.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

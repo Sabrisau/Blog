@@ -1,0 +1,231 @@
+/* Establece una fuente base para todo el cuerpo */
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Encabezados con diferentes tamaños y pesos */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Georgia', serif;
+    color: #444444;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+}
+
+h2 {
+    font-size: 2em;
+}
+
+/* Estilo para párrafos */
+p {
+    margin-bottom: 15px;
+}
+
+/* Estilo para la barra de navegación */
+nav {
+    background-color: #f788bf;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Permitir que se envuelvan los elementos en pantallas más pequeñas */
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #614d5c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    padding: 8px 12px; /* Agrega padding para aumentar el área de clic */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+nav ul li a:hover {
+    background-color: #f545ac; /* Un rosa más oscuro para el hover */
+    color: #fff; /* Cambia el color del texto al pasar el mouse */
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+    nav ul {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    }
+
+    nav ul li {
+        margin: 10px 0; /* Ajusta el margen para elementos en columna */
+    }
+}
+
+/* Estilos para formularios */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f5cfdc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+form input[type="submit"],
+form button {
+    background-color: #db347a;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilos para listas de mensajes */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #ffffff;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ul li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+ul li a {
+    color: #e74c3c;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Detalles del mensaje */
+.mensaje-detalles {
+    margin-top: 10px;
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+/* Pie de página */
+.content {
+    margin-bottom: 100px; /* Ajusta según la altura del footer */
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #a11e5b;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 15px 0;
+    height: 60px; /* Ajusta la altura */
+}
+
+body {
+    padding-bottom: 60px; /* Igual a la altura del footer */
+}
+
+/* Botones de acción */
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1em;
+    color: #fcd2de;
+    background-color: #2ecc71;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #eebfde;
+    transform: scale(1.05);
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
+
+/* Sombra para elementos destacados */
+.highlight {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid var(--secondary-color);
+    padding: 15px;
+    background-color: #f7cbdf;
+    margin-bottom: 20px;
+}
+
+/* Estilos para el saludo al usuario */
+.saludo-usuario {
+    text-align: center; /* Centra el texto */
+    margin: 15px 0; /* Espaciado vertical */
+    font-size: 1.2em; /* Tamaño de fuente */
+    color: #685159; /* Color rosado */
+    font-weight: bold; /* Negrita */
+    background-color: rgba(255, 192, 203, 0.3); /* Fondo suave */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Responsive: Asegura que el texto no se salga de la pantalla en móviles */
+@media (max-width: 600px) {
+    .saludo-usuario {
+        font-size: 1em; /* Reduce el tamaño en pantallas pequeñas */
+    }
+}
+

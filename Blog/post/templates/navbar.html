@@ -1,0 +1,16 @@
+<nav>
+    <ul>
+        <li><a href="{% url 'home' %}">Inicio</a></li>
+        <li><a href="{% url 'crear_publicacion' %}">Crear Publicación</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}" >Log in</a></li>
+            <li><a href="{% url 'registro' %}">Registrarse</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+{% if user.is_authenticated %}
+    <p class="saludo-usuario">Hola {{ user.username }}</p>
+{% endif %}

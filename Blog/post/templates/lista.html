@@ -1,20 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}Lista de Publicaciones{% endblock %}
-
 {% block content %}
-    <h1>Publicaciones del Blog</h1>
+  <h1>Publicaciones</h1>
 
-    {% if posts %}
-        <ul>
-            {% for post in posts %}
-                <li>
-                    <h2><a href="{% url 'detalle publicacion' post.pk %}">{{ post.title }}</a></h2>
-                    <p>Publicado el {{ post.published_at|date:"d M Y" }} por {{ post.author }}</p>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No hay publicaciones disponibles.</p>
-    {% endif %}
+  <form method="GET" action="{% url 'lista_publicaciones' %}">
+    <select name="autor">
+      <option value="">Todos los autores</option>
+      {% for autor in autores %}
+        <option value="{{ autor.id }}">{{ autor.username }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Filtrar</button>
+  </form>
+
+  <ul>
+    {% for publicacion in object_list %}
+      <li>
+        <h2>{{ publicacion.titulo }}</h2>
+        <p>Publicado el {{ publicacion.fecha|date:"d M Y H:i" }}</p>
+        {% if publicacion.autor %}
+          <p>Publicado por {{ publicacion.autor }}</p>
+        {% endif %}
+        <a href="{% url 'detalle_publicacion' publicacion.pk %}">Ver Detalle</a>
+      </li>
+    {% empty %}
+      <li>No hay publicaciones disponibles.</li>
+    {% endfor %}
+  </ul>
 {% endblock %}

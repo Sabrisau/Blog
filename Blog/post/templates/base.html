@@ -1,33 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Blog{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>{% block title %} Blog {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{% url 'lista publicaciones' %}">Inicio</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'crear publicacion' %}">Crear publicación</a></li>
-                    <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-    </header>
+    {% include 'navbar.html' %}
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
     <footer>
-        <p>&copy; 2024 Blog</p>
+        <p>&copy; 2024 Blog - Progrmacion Web 2</p>
     </footer>
 </body>
 </html>

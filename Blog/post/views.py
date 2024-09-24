@@ -1,52 +1,75 @@
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.forms import UserCreationForm
 from .models import Post
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
-# Vista para listar todas las publicaciones
-class PostListView(ListView):
+# Vista para el home
+class RegistroUsuario(CreateView):
+    template_name = 'registro.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+
+class ListaPublicacionesView(ListView):
     model = Post
-    template_name = 'post/post_list.html'  # Plantilla que mostrará la lista
-    context_object_name = 'posts'  # Nombre de la variable de contexto en la plantilla
-    ordering = ['-published_at']  # Ordenar por fecha de publicación descendente
+    template_name = 'lista.html'  
+    #context_object_name = 'publicaciones'
+    ordering = ['-fecha']
 
-# Vista para ver el detalle de una publicación específica
-class PostDetailView(DetailView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        autor_id = self.request.GET.get('autor')
+
+        if autor_id:
+            queryset = queryset.filter(autor_id=autor_id)
+
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['autores'] = User.objects.all()  # Obtener todos los usuarios
+        return context
+
+class DetallePublicacionView(DetailView):
     model = Post
-    template_name = 'post/post_detail.html'  # Plantilla para el detalle de la publicación
-    context_object_name = 'post'  # Nombre de la variable de contexto en la plantilla
+    template_name = 'detalle.html'  
 
-# Vista para crear una nueva publicación (solo usuarios autenticados)
-class PostCreateView(LoginRequiredMixin, CreateView):
+def home_view(request):
+    view = ListaPublicacionesView.as_view()
+    return view(request)
+
+class CrearPublicacionView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content']  # Campos que se mostrarán en el formulario
-    template_name = 'post/post_form.html'  # Plantilla para el formulario de creación
-    success_url = reverse_lazy('post-list')  # Redirigir a la lista de publicaciones tras crear
+    fields = ['titulo', 'contenido']  # Campos de la publicación que se deben mostrar en el formulario
+    template_name = 'formulario.html' 
+    success_url = reverse_lazy('lista_publicaciones')  # Redirige a la lista de publicaciones
 
-    # Asigna el usuario autenticado como el autor del post
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.autor = self.request.user  # Asigna el usuario autenticado como autor
         return super().form_valid(form)
 
-# Vista para editar una publicación (solo para el autor de la publicación)
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ActualizarPublicacionView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content']  # Campos editables
-    template_name = 'post/post_form.html'  # Reutiliza la misma plantilla de creación
-    success_url = reverse_lazy('post-list')  # Redirige a la lista de publicaciones tras editar
-
-    # Verifica si el usuario autenticado es el autor de la publicación
+    fields = ['titulo', 'contenido']  
+    template_name = 'formulario.html'  
+    success_url = reverse_lazy('lista_publicaciones') 
+    
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.author
+        return self.request.user == post.autor  
 
-# Vista para eliminar una publicación (solo para el autor de la publicación)
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class EliminarPublicacionView(LoginRequiredMixin, DeleteView):
     model = Post
-    template_name = 'post/post_confirm_delete.html'  # Plantilla para confirmar eliminación
-    success_url = reverse_lazy('post-list')  # Redirige a la lista de publicaciones tras eliminar
+    template_name = 'confirmacion_eliminacion.html'  
+    success_url = reverse_lazy('lista_publicaciones') 
 
-    # Verifica si el usuario autenticado es el autor de la publicación
-    def test_func(self):
-        post = self.get_object()
-        return self.request.user == post.author
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
+
+    def get_queryset(self):
+        return Post.objects.filter(autor=self.request.user)
