@@ -7,7 +7,6 @@ from .models import Post
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-# Vista para el home
 class RegistroUsuario(CreateView):
     template_name = 'registro.html'
     form_class = UserCreationForm
@@ -16,7 +15,6 @@ class RegistroUsuario(CreateView):
 class ListaPublicacionesView(ListView):
     model = Post
     template_name = 'lista.html'  
-    #context_object_name = 'publicaciones'
     ordering = ['-fecha']
 
     def get_queryset(self):
@@ -43,9 +41,9 @@ def home_view(request):
 
 class CrearPublicacionView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['titulo', 'contenido']  # Campos de la publicación que se deben mostrar en el formulario
+    fields = ['titulo', 'contenido']  
     template_name = 'formulario.html' 
-    success_url = reverse_lazy('lista_publicaciones')  # Redirige a la lista de publicaciones
+    success_url = reverse_lazy('lista_publicaciones')  
 
     def form_valid(self, form):
         form.instance.autor = self.request.user  # Asigna el usuario autenticado como autor
